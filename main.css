@@ -1,0 +1,45 @@
+body {
+  font-family: 'Rock Salt', cursive;
+  color: white;
+}
+
+.jumbotron {
+  background-color: grey;
+  text-align: center;
+  margin-bottom: 0px;
+}
+
+.chalkboard {
+  text-align: center;
+  background: url("https://img.clipartfest.com/d5c2756538790b2e1c7bedcf21f7c03c_blackboard-chalk-by-raindart-chalkboard-background-clipart_2362-1434.jpeg");
+  background-size: contain;
+  width: 100%;
+  height: 800px;
+  background-repeat: no-repeat;
+  padding-top: 5rem;
+}
+
+.button {
+  margin-top: 5rem;
+}
+
+.horizontal {
+  display: inline-block;
+  padding: 0 1rem;
+  /*list-style: none;*/
+}
+.point-box {
+  position: absolute;;
+  bottom: 6rem;
+  right: 5rem;
+}
+
+.start {
+  margin-top: 10rem;
+  display: inline-block;
+}
+
+#myModal {
+  color: black;
+  font-family: sans-serif;
+}
