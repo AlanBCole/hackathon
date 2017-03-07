@@ -12,8 +12,8 @@ body {
 .chalkboard {
   text-align: center;
   background: url("https://img.clipartfest.com/d5c2756538790b2e1c7bedcf21f7c03c_blackboard-chalk-by-raindart-chalkboard-background-clipart_2362-1434.jpeg");
-  background-size: contain;
-  width: 100%;
+  background-size: cover;
+  width: 100vw;
   height: 800px;
   background-repeat: no-repeat;
   padding-top: 5rem;
@@ -40,6 +40,11 @@ body {
 }
 
 #myModal {
+  color: black;
+  font-family: sans-serif;
+}
+
+#correctAnswer {
   color: black;
   font-family: sans-serif;
 }

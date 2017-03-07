@@ -26,6 +26,7 @@
   <div class="chalkboard">
 
 
+
     <div class="container">
       <div class="row">
 
@@ -33,24 +34,32 @@
           <div class="row">
             <h2>Math</h2>
             <div
-            ng-click="main.setQuestion(questions)"
+            ng-init="questions.score = ($index + 1)* 100"
+            ng-click="main.setQuestion(questions, points); hide =! hide"
             ng-repeat="questions in main.mathquestion"
             ng-mousedown="main.flip($event)"
-            ng-mouseup="main.flipEnable($event)" class="col-xs-10 col-xs-offset-1 thumbnail btn btn-default button">
-              {{($index + 1)* 100}}
+            ng-mouseup="main.flipEnable($event)"
+            class="col-xs-10 col-xs-offset-1 thumbnail btn btn-default button"
+            ng-hide="hide"
+            ng-model='main.points'>
+              {{questions.score}}
             </div>
           </div>
         </div>
+
 
         <div class="col-xs-3 col-xs-offset-1 col-md-3 col-md-offset-1 text-center">
           <div class="row">
             <h2>Science</h2>
             <div
-            ng-click="main.setQuestion(questions)"
+            ng-init="questions.score = ($index + 1)* 100"
+            ng-click="main.setQuestion(questions); hide =! hide"
             ng-repeat="questions in main.sciencequestion"
             ng-mousedown="main.flip($event)"
-            ng-mouseup="main.flipEnable($event)" class="col-xs-10 col-xs-offset-1 thumbnail btn btn-default button">
-              {{($index + 1)* 100}}
+            ng-mouseup="main.flipEnable($event)"
+            class="col-xs-10 col-xs-offset-1 thumbnail btn btn-default button"
+            ng-hide="hide">
+              {{questions.score}}
             </div>
           </div>
         </div>
@@ -59,11 +68,15 @@
           <div class="row">
             <h2>History</h2>
             <div
-            ng-click="main.setQuestion(questions)"
+            ng-init="questions.score = ($index + 1)* 100"
+            ng-click="main.setQuestion(questions); hide =! hide"
             ng-repeat="questions in main.historyquestion"
             ng-mousedown="main.flip($event)"
-            ng-mouseup="main.flipEnable($event)" class="col-xs-10 col-xs-offset-1 thumbnail btn btn-default button">
-              {{($index + 1)* 100}}
+            ng-mouseup="main.flipEnable($event)"
+            class="col-xs-10 col-xs-offset-1 thumbnail btn btn-default button"
+            ng-hide="hide"
+            ng-model='main.points'>
+              {{questions.score}}
             </div>
           </div>
         </div>
@@ -83,33 +96,69 @@
     <!-- question modal -->
 
 
-<!-- Modal -->
+<!-- question Modal -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel">{{main.chosenQuestion.question}}</h4>
+            <h4 class="modal-title" id="myModalLabel">{{main.chosenQuestion.question}} for {{($index + 1)* 100}}</h4>
           </div>
           <div ng-class="modal-body">
-            <!-- <h3></h3> -->
 
               <!-- <div class="input-group" ng-repeat="answer in main.answers">
                 <span class="input-group-addon">
                   <input type="checkbox">
                 </span> -->
                 <!-- </div> -->
+
+                <!-- <form class=""  method="post" ng-repeat="answers in main.chosenQuestion.newChoices">
+                  <input type="checkbox" name="" value="{{answers}}">{{answers}}
+                  <input type="submit" name="" value="submit" ng-click="main.answer(answers , main.chosenQuestion)">
+                </form> -->
+
                 <ol>
-                  <li ng-repeat="answers in main.chosenQuestion.newChoices"><button ng-click="main.answer(answers, main.chosenQuestion)" class="btn btn-default" ng-model="main.guess">   {{answers}}</button></li>
+                  <!-- <li ng-repeat="answers in main.chosenQuestion.newChoices"><button ng-click="main.answer(answers, main.chosenQuestion)" class="btn btn-default">   {{answers}}</button></li> -->
+                  <li ng-repeat="answers in main.chosenQuestion.newChoices"><input type="radio" name="" ng-value="answers" ng-model='main.answers'>{{answers}}</li>
+                  <!-- ng-click="main.answer(answers, main.chosenQuestion)" class="btn btn-default" ng-model="main.guess" -->
                 </ol>
+                <h1 ng-model="main.guess"></h1>
                 <!-- <button  class="btn btn-warning" ng-click="" type="button" name="button">{{answer}}</button> -->
           </div>
           <div class="modal-footer">
             <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
-            <button ng-click="main.answerCheck()" type="button" class="btn btn-primary" data-dismiss="modal">Try Your Luck!</button>
-          </div>
+            <!-- <button ng-click="main.answer(main.answers , main.chosenQuestion)" type="button" class="btn btn-primary" data-dismiss="modal">Try Your Luck!</button> -->
+
+            <button ng-repeat="player in main.game.players" ng-click="main.answer(main.answers, main.chosenQuestion, player)" type="button" class="btn btn-primary" data-dismiss="modal">{{player.name}}'s Choice!</button>
+            </div>
         </div>
       </div>
     </div>
+
+    <!-- Answer Modal -->
+
+    <!-- <div class="modal fade" id="correctAnswer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Great Job</h4>
+          </div>
+          <div ng-class="modal-body">
+
+            <h1>Congrats</h1>
+            <h3>Now who do the points get awarded to?</h3>
+
+          </div>
+          <div class="modal-footer">
+            <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+            <!-- <button ng-click="main.answer(answers, main.chosenQuestion); main.points(num)" type="button" class="btn btn-primary" data-dismiss="modal">Try Your Luck!</button> -->
+
+            <!-- <button ng-repeat="player in main.game.players" ng-click="main.answer(answers, main.chosenQuestion)" type="button" class="btn btn-primary" data-dismiss="modal">{{player.name}}'s Choice!</button>
+            </div>
+        </div>
+      </div>
+    </div> -->
+
   </body>
 </html>
